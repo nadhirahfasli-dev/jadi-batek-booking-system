@@ -1,10 +1,10 @@
 <?php
 date_default_timezone_set('Asia/Kuala_Lumpur');
 
-$host     = "localhost";
-$username = "root";
-$password = "";
-$dbname   = "jadibatek_db";
+$host     = "sql306.infinityfree.com"; // MySQL Hostname
+$username = "if0_43252964";          // MySQL Username
+$password = "Gmi202699100";   // MySQL Password
+$dbname   = "if0_43252964_jadibatek_db"; // Database Name
 
 // Matikan laporan skrin secara automatik untuk mengelakkan Fatal Error paparan putih
 mysqli_report(MYSQLI_REPORT_OFF);
