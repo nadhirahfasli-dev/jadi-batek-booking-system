@@ -94,6 +94,10 @@
             padding: 0;
         }
 
+        .menu-toggle {
+            display: none;
+        }
+
         .nav-links a {
             color: #ffffff;
             text-decoration: none;
@@ -108,6 +112,89 @@
         .nav-links a:hover,
         .nav-links a.active {
             color: var(--hover-red);
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                display: grid;
+                grid-template-columns: minmax(0, 1fr) auto auto;
+                align-items: center;
+                gap: 8px;
+                height: auto;
+                padding: 10px 16px;
+                background: rgba(0, 0, 0, 0.35);
+            }
+
+            .logo-img {
+                height: 52px;
+                max-width: 100%;
+            }
+
+            .nav-links {
+                display: none;
+                grid-column: 1 / -1;
+                width: 100%;
+                flex-direction: column;
+                align-items: center;
+                gap: 0;
+                padding: 4px 0;
+            }
+
+            .nav-links.is-open {
+                display: flex;
+            }
+
+            .nav-links li {
+                width: 100%;
+                text-align: center;
+            }
+
+            .nav-links a {
+                display: block;
+                padding: 10px;
+            }
+
+            .menu-toggle {
+                display: flex;
+                width: 42px;
+                height: 42px;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 5px;
+                padding: 8px;
+                color: #ffffff;
+                background: transparent;
+                border: 1px solid currentColor;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+
+            .menu-toggle span {
+                display: block;
+                width: 22px;
+                height: 2px;
+                background: currentColor;
+            }
+
+            .nav-links a {
+                font-size: 11px;
+                letter-spacing: 1px;
+            }
+
+            .search-btn-only {
+                grid-column: 3;
+                grid-row: 1;
+            }
+
+            .bg-video {
+                width: 100%;
+                height: 100%;
+                min-width: 0;
+                min-height: 0;
+                object-fit: contain;
+                background: #111111;
+            }
         }
 
         /* BUTTON IKON SEARCH SAHAJA */
@@ -212,6 +299,116 @@
             font-weight: 600;
         }
 
+        @media (max-width: 768px) {
+            .hero-section {
+                height: 100vh;
+                min-height: 80vh;
+            }
+
+            .bg-video {
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                min-width: 0;
+                min-height: 0;
+                transform: none;
+                object-fit: cover;
+            }
+
+            .navbar {
+                position: absolute;
+                top: 0;
+                left: 0;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+                height: auto;
+                padding: 15px 20px;
+                background: transparent;
+                animation: none;
+            }
+
+            .navbar .logo {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+
+            .logo-img {
+                width: auto;
+                max-width: calc(100vw - 140px);
+                height: 52px;
+                object-fit: contain;
+            }
+
+            .menu-toggle {
+                display: flex;
+                position: relative;
+                z-index: 2;
+                width: 40px;
+                height: 40px;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 5px;
+                padding: 6px;
+                color: #ffffff;
+                background: transparent;
+                border: 0;
+                cursor: pointer;
+            }
+
+            .menu-toggle span {
+                width: 24px;
+                height: 2px;
+                background: currentColor;
+            }
+
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                z-index: 1;
+                display: none;
+                width: 100%;
+                max-height: calc(100vh - 80px);
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0;
+                overflow-y: auto;
+                padding: 8px 20px 14px;
+                background: rgba(20, 20, 20, 0.96);
+            }
+
+            .nav-links.is-open {
+                display: flex;
+            }
+
+            .nav-links li {
+                width: 100%;
+                text-align: center;
+            }
+
+            .nav-links a {
+                display: block;
+                padding: 12px;
+                color: #ffffff;
+                font-size: 13px;
+                letter-spacing: 1px;
+            }
+
+            .search-btn-only {
+                position: relative;
+                z-index: 2;
+                margin-left: auto;
+                color: #ffffff;
+                font-size: 18px;
+            }
+        }
+
         /* STYLES BUTTON BOOK NOW */
         .btn-book-now {
             display: inline-block;
@@ -233,6 +430,116 @@
             box-shadow: 0px 6px 20px rgba(232, 76, 85, 0.5);
             transform: translateY(-3px);
         }
+
+        @media (max-width: 1024px),
+        (max-height: 500px) and (orientation: landscape) {
+            .hero-section {
+                height: 100vh;
+                min-height: 80vh;
+            }
+
+            .bg-video {
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                max-height: 100vh;
+                min-width: 0;
+                min-height: 0;
+                transform: none;
+                object-fit: cover;
+            }
+
+            .navbar {
+                position: absolute;
+                top: 0;
+                left: 0;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+                height: auto;
+                padding: 15px 20px;
+                background: transparent;
+            }
+
+            .navbar .logo {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+
+            .logo-img {
+                width: auto;
+                height: 52px;
+            }
+
+            .menu-toggle {
+                display: flex;
+                position: relative;
+                z-index: 2;
+                width: 40px;
+                height: 40px;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 5px;
+                padding: 6px;
+                color: #ffffff;
+                background: transparent;
+                border: 0;
+                cursor: pointer;
+            }
+
+            .menu-toggle span {
+                display: block;
+                width: 24px;
+                height: 2px;
+                background: currentColor;
+            }
+
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                z-index: 1;
+                display: none;
+                width: 100%;
+                max-height: calc(100vh - 80px);
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0;
+                overflow-y: auto;
+                padding: 8px 20px 14px;
+                background: rgba(20, 20, 20, 0.96);
+            }
+
+            .nav-links.is-open {
+                display: flex;
+            }
+
+            .nav-links li {
+                width: 100%;
+                text-align: center;
+            }
+
+            .nav-links a {
+                display: block;
+                padding: 12px;
+                color: #ffffff;
+                font-size: 13px;
+                letter-spacing: 1px;
+            }
+
+            .search-btn-only {
+                position: relative;
+                z-index: 2;
+                margin-left: auto;
+                color: #ffffff;
+                font-size: 18px;
+            }
+        }
     </style>
 </head>
 
@@ -242,7 +549,7 @@
         <!-- VIDEO BACKGROUND -->
         <video autoplay loop muted playsinline class="bg-video">
             <source src="video1new.mp4" type="video/mp4">
-            <source src="images/video1.mp4" type="video/mp4">
+            <source src="images/video1new.mp4" type="video/mp4">
         </video>
 
         <!-- NAVBAR -->
@@ -253,7 +560,13 @@
                 </a>
             </div>
 
-            <ul class="nav-links">
+            <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav-links" aria-label="Open navigation menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <ul class="nav-links" id="site-nav-links">
                 <li><a href="index.php" class="active">HOME</a></li>
                 <li><a href="about.php">ABOUT</a></li>
                 <li><a href="gallery.php">GALLERY</a></li>
@@ -303,6 +616,25 @@
     <?php include 'search-modal.php'; ?>
     <?php include 'footer.php'; ?>
 
+    <script>
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.getElementById('site-nav-links');
+
+        menuToggle.addEventListener('click', () => {
+            const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+            menuToggle.setAttribute('aria-expanded', String(!isExpanded));
+            menuToggle.setAttribute('aria-label', isExpanded ? 'Open navigation menu' : 'Close navigation menu');
+            navLinks.classList.toggle('is-open', !isExpanded);
+        });
+
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                menuToggle.setAttribute('aria-expanded', 'false');
+                menuToggle.setAttribute('aria-label', 'Open navigation menu');
+                navLinks.classList.remove('is-open');
+            });
+        });
+    </script>
 </body>
 
 </html>

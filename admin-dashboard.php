@@ -433,6 +433,12 @@ $result = mysqli_query($conn, "SELECT * FROM bookings ORDER BY created_at DESC")
             color: #ffffff;
         }
 
+        .table-scroll {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
         @media (max-width: 1024px) {
             .sidebar {
                 width: 80px;
@@ -452,6 +458,212 @@ $result = mysqli_query($conn, "SELECT * FROM bookings ORDER BY created_at DESC")
 
             .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 1024px),
+        (max-height: 500px) and (orientation: landscape) {
+            body {
+                display: block;
+                min-height: 100vh;
+                min-height: 100svh;
+                background-attachment: scroll;
+            }
+
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+                min-height: 68px;
+                flex-direction: row;
+                align-items: center;
+                gap: 16px;
+                padding: 10px 16px;
+                border-right: 0;
+                border-bottom: 2px solid rgba(197, 154, 69, 0.3);
+            }
+
+            .sidebar>div {
+                display: flex;
+                align-items: center;
+                gap: 16px;
+                min-width: 0;
+            }
+
+            .sidebar-brand {
+                padding: 0;
+                border: 0;
+            }
+
+            .sidebar-brand img {
+                display: block;
+                width: auto;
+                max-width: 100px;
+                max-height: 46px;
+            }
+
+            .sidebar-brand p {
+                display: none;
+            }
+
+            .nav-menu {
+                flex-direction: row;
+                gap: 6px;
+                margin: 0;
+            }
+
+            .nav-item span {
+                display: inline;
+            }
+
+            .nav-item a {
+                justify-content: center;
+                padding: 10px 12px;
+                white-space: nowrap;
+            }
+
+            .logout-btn {
+                flex-shrink: 0;
+                margin-left: auto;
+                padding: 10px 12px;
+                white-space: nowrap;
+            }
+
+            .logout-btn span {
+                display: inline;
+            }
+
+            .main-wrapper {
+                width: 100%;
+                min-width: 0;
+                margin-left: 0;
+                padding: clamp(16px, 3vw, 28px);
+            }
+
+            .top-bar {
+                flex-wrap: wrap;
+                gap: 16px;
+            }
+
+            .page-title {
+                min-width: 0;
+            }
+
+            .page-title h1 {
+                font-size: clamp(26px, 4vw, 34px);
+                overflow-wrap: anywhere;
+            }
+
+            .page-title p {
+                line-height: 1.5;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 14px;
+            }
+
+            .stat-card {
+                min-width: 0;
+                gap: 12px;
+                padding: 16px;
+            }
+
+            .stat-card-info {
+                min-width: 0;
+                overflow-wrap: anywhere;
+            }
+
+            .stat-card-info p {
+                font-size: clamp(22px, 4vw, 28px);
+            }
+
+            .content-card {
+                min-width: 0;
+                padding: clamp(16px, 3vw, 28px);
+            }
+
+            .table-header-bar {
+                flex-wrap: wrap;
+                gap: 14px;
+            }
+
+            .search-box {
+                width: min(100%, 300px);
+            }
+
+            .search-box input,
+            .search-box input:focus {
+                width: 100%;
+            }
+
+            .table-scroll table {
+                min-width: 1000px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .sidebar {
+                gap: 8px;
+                padding: 10px 12px;
+            }
+
+            .sidebar>div {
+                gap: 8px;
+            }
+
+            .sidebar-brand img {
+                max-width: 76px;
+            }
+
+            .nav-item a {
+                gap: 0;
+                padding: 10px;
+            }
+
+            .nav-item span,
+            .logout-btn span {
+                display: none;
+            }
+
+            .logout-btn {
+                justify-content: center;
+                width: 40px;
+                height: 40px;
+                padding: 0;
+            }
+
+            .top-bar {
+                align-items: stretch;
+            }
+
+            .btn-create-booking {
+                justify-content: center;
+                align-self: flex-start;
+            }
+
+            .stats-grid {
+                grid-template-columns: minmax(0, 1fr);
+            }
+
+            .table-header-bar h3 {
+                font-size: 23px;
+            }
+        }
+
+        @media (max-height: 500px) and (orientation: landscape) {
+            .sidebar {
+                min-height: 58px;
+                padding-top: 6px;
+                padding-bottom: 6px;
+            }
+
+            .sidebar-brand img {
+                max-height: 38px;
+            }
+
+            .main-wrapper {
+                padding-top: 16px;
             }
         }
     </style>
@@ -539,7 +751,7 @@ $result = mysqli_query($conn, "SELECT * FROM bookings ORDER BY created_at DESC")
                 </div>
             </div>
 
-            <div style="overflow-x: auto;">
+            <div class="table-scroll">
                 <table id="bookingTable">
                     <thead>
                         <tr>

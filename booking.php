@@ -95,6 +95,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             gap: 30px;
         }
 
+        .menu-toggle {
+            display: none;
+        }
+
         .nav-links a {
             text-decoration: none;
             color: var(--dark-accent);
@@ -785,6 +789,258 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 text-align: center;
             }
         }
+
+        @media (max-width: 768px) {
+            .navbar {
+                position: relative;
+                top: auto;
+                display: grid;
+                grid-template-columns: minmax(0, 1fr) auto auto;
+                align-items: center;
+                gap: 8px;
+                padding: 10px 16px;
+            }
+
+            .logo-img {
+                max-width: 100%;
+                height: 42px;
+            }
+
+            .nav-links {
+                display: none;
+                grid-column: 1 / -1;
+                width: 100%;
+                flex-direction: column;
+                align-items: center;
+                gap: 0;
+                margin: 0;
+                padding: 4px 0;
+            }
+
+            .nav-links.is-open {
+                display: flex;
+            }
+
+            .nav-links li {
+                width: 100%;
+                text-align: center;
+            }
+
+            .nav-links a {
+                display: block;
+                padding: 10px;
+                font-size: 11px;
+                letter-spacing: 1px;
+            }
+
+            .menu-toggle {
+                display: flex;
+                width: 42px;
+                height: 42px;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 5px;
+                padding: 8px;
+                color: var(--dark-accent);
+                background: transparent;
+                border: 1px solid currentColor;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+
+            .menu-toggle span {
+                display: block;
+                width: 22px;
+                height: 2px;
+                background: currentColor;
+            }
+
+            .search-btn-only {
+                grid-column: 3;
+                grid-row: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                position: absolute;
+                top: 0;
+                left: 0;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+                height: auto;
+                padding: 15px 20px;
+                background: transparent;
+                backdrop-filter: none;
+                border-bottom: 0;
+            }
+
+            .navbar .logo {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+
+            .logo-img {
+                width: auto;
+                max-width: calc(100vw - 140px);
+                height: 52px;
+                object-fit: contain;
+            }
+
+            .menu-toggle {
+                position: relative;
+                z-index: 2;
+                width: 40px;
+                height: 40px;
+                padding: 6px;
+                color: var(--dark-accent);
+                background: transparent;
+                border: 0;
+            }
+
+            .menu-toggle span {
+                width: 24px;
+                height: 2px;
+                background: currentColor;
+            }
+
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                z-index: 1;
+                width: 100%;
+                max-height: calc(100vh - 80px);
+                overflow-y: auto;
+                padding: 8px 20px 14px;
+                background: rgba(20, 20, 20, 0.96);
+            }
+
+            .nav-links li {
+                width: 100%;
+                text-align: center;
+            }
+
+            .nav-links a {
+                color: #ffffff;
+            }
+
+            .search-btn-only {
+                position: relative;
+                z-index: 2;
+                margin-left: auto;
+                color: var(--dark-accent);
+                font-size: 18px;
+            }
+
+            .booking-hero {
+                padding-top: 115px;
+            }
+        }
+
+        @media (max-width: 1024px), (max-height: 500px) and (orientation: landscape) {
+            .navbar {
+                position: absolute;
+                top: 0;
+                left: 0;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+                height: auto;
+                padding: 15px 20px;
+                background: transparent;
+                backdrop-filter: none;
+                border-bottom: 0;
+            }
+
+            .navbar .logo {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+
+            .logo-img {
+                width: auto;
+                height: 52px;
+            }
+
+            .menu-toggle {
+                display: flex;
+                position: relative;
+                z-index: 2;
+                width: 40px;
+                height: 40px;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 5px;
+                padding: 6px;
+                color: var(--dark-accent);
+                background: transparent;
+                border: 0;
+                cursor: pointer;
+            }
+
+            .menu-toggle span {
+                display: block;
+                width: 24px;
+                height: 2px;
+                background: currentColor;
+            }
+
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                z-index: 1;
+                display: none;
+                width: 100%;
+                max-height: calc(100vh - 80px);
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0;
+                overflow-y: auto;
+                margin: 0;
+                padding: 8px 20px 14px;
+                background: rgba(20, 20, 20, 0.96);
+            }
+
+            .nav-links.is-open {
+                display: flex;
+            }
+
+            .nav-links li {
+                width: 100%;
+                text-align: center;
+            }
+
+            .nav-links a {
+                display: block;
+                padding: 12px;
+                color: #ffffff;
+                font-size: 13px;
+                letter-spacing: 1px;
+            }
+
+            .search-btn-only {
+                position: relative;
+                z-index: 2;
+                margin-left: auto;
+                color: var(--dark-accent);
+                font-size: 18px;
+            }
+
+            .booking-hero {
+                padding-top: 115px;
+            }
+        }
     </style>
 </head>
 
@@ -798,7 +1054,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </a>
         </div>
 
-        <ul class="nav-links">
+        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav-links" aria-label="Open navigation menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <ul class="nav-links" id="site-nav-links">
             <li><a href="index.php">HOME</a></li>
             <li><a href="about.php">ABOUT</a></li>
             <li><a href="gallery.php">GALLERY</a></li>
@@ -1227,6 +1489,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.getElementById('site-nav-links');
+
+        menuToggle.addEventListener('click', () => {
+            const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+            menuToggle.setAttribute('aria-expanded', String(!isExpanded));
+            menuToggle.setAttribute('aria-label', isExpanded ? 'Open navigation menu' : 'Close navigation menu');
+            navLinks.classList.toggle('is-open', !isExpanded);
+        });
+
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                menuToggle.setAttribute('aria-expanded', 'false');
+                menuToggle.setAttribute('aria-label', 'Open navigation menu');
+                navLinks.classList.remove('is-open');
+            });
+        });
+
         let selectedPkgName = "Batik Coloring (Cotton)";
         let selectedPkgPrice = 38;
         let paxCount = 1;

@@ -178,6 +178,62 @@ if (isset($_POST['login'])) {
         .back-link a:hover {
             color: var(--brand-red);
         }
+
+        @media (max-width: 1024px), (max-height: 500px) and (orientation: landscape) {
+            body {
+                min-height: 100vh;
+                min-height: 100svh;
+                background-attachment: scroll;
+                padding: clamp(12px, 4vw, 24px);
+            }
+
+            .login-card {
+                width: min(100%, 440px);
+                padding: clamp(24px, 6vw, 40px);
+                border-radius: 20px;
+            }
+
+            .login-logo {
+                max-width: min(150px, 45vw);
+            }
+
+            .input-group input[type="password"],
+            .btn-login {
+                min-height: 46px;
+            }
+        }
+
+        @media (max-height: 500px) and (orientation: landscape) {
+            body {
+                align-items: flex-start;
+            }
+
+            .login-card {
+                margin: auto;
+                padding: 18px 28px;
+            }
+
+            .login-logo {
+                max-width: 100px;
+                margin-bottom: 8px;
+            }
+
+            .login-card h2 {
+                font-size: 24px;
+            }
+
+            .login-card p.subtitle {
+                margin-bottom: 16px;
+            }
+
+            .input-group {
+                margin-bottom: 12px;
+            }
+
+            .back-link {
+                margin-top: 14px;
+            }
+        }
     </style>
 </head>
 
