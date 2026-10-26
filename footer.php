@@ -4,7 +4,7 @@
 
         <!-- COLUMN 1: BRAND & INFO -->
         <div class="footer-col brand-col">
-            <a href="index.php" class="footer-logo-link">
+            <a href="welcome.php" class="footer-logo-link">
                 <img src="logo.png" onerror="this.onerror=null; this.src='images/logo.png';" alt="Jadi Batek Logo" class="footer-logo">
             </a>
             <p class="footer-brand-desc">
@@ -27,7 +27,7 @@
         <div class="footer-col">
             <h4 class="footer-heading">Quick Links</h4>
             <ul class="footer-links">
-                <li><a href="index.php"><i class="fas fa-chevron-right"></i> Home</a></li>
+                <li><a href="welcome.php"><i class="fas fa-chevron-right"></i> Home</a></li>
                 <li><a href="about.php"><i class="fas fa-chevron-right"></i> About Us</a></li>
                 <li><a href="gallery.php"><i class="fas fa-chevron-right"></i> Gallery</a></li>
                 <li><a href="video.php"><i class="fas fa-chevron-right"></i> Video Showcase</a></li>

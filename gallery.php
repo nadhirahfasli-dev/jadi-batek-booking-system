@@ -417,10 +417,6 @@
                 gap: 20px;
             }
 
-            .navbar {
-                padding: 0 20px;
-            }
-
             .bento-section {
                 padding: 0 20px;
             }
@@ -597,7 +593,7 @@
             }
         }
 
-        @media (max-width: 1024px), (max-height: 500px) and (orientation: landscape) {
+        @media (max-width: 768px) {
             .navbar {
                 position: absolute;
                 top: 0;
@@ -693,6 +689,81 @@
             }
         }
     </style>
+    <link rel="stylesheet" href="responsive.css">
+    <style>
+        @media (max-width: 767px) {
+            .provide-section {
+                padding-right: 16px;
+                padding-left: 16px;
+            }
+
+            .provide-grid {
+                grid-template-columns: minmax(0, 1fr);
+                gap: 16px;
+                width: 100%;
+            }
+
+            .provide-card {
+                width: 100%;
+                min-width: 0;
+                opacity: 1 !important;
+                transform: none !important;
+                will-change: box-shadow, filter;
+                animation: amenity-card-enter 0.5s ease both;
+            }
+
+            .provide-card:nth-child(2) {
+                animation-delay: 80ms;
+            }
+
+            .provide-card:nth-child(3) {
+                animation-delay: 160ms;
+            }
+
+            .provide-card:nth-child(4) {
+                animation-delay: 240ms;
+            }
+
+            .provide-card:active,
+            .provide-card.is-active {
+                border: 1px solid #e53935;
+                box-shadow: 0 8px 20px rgba(229, 57, 53, 0.2);
+            }
+
+            .provide-card:active .provide-icon-ring,
+            .provide-card.is-active .provide-icon-ring {
+                background: var(--primary-red);
+                color: #ffffff;
+                border-color: var(--primary-red);
+                transform: scale(1.1) rotate(6deg);
+                box-shadow: 0 10px 25px rgba(232, 76, 85, 0.3);
+            }
+
+            .provide-card:focus-visible {
+                outline: 2px solid #e53935;
+                outline-offset: 3px;
+            }
+        }
+
+        @keyframes amenity-card-enter {
+            from {
+                filter: brightness(0.96);
+                box-shadow: 0 2px 8px rgba(44, 34, 30, 0.04);
+            }
+
+            to {
+                filter: brightness(1);
+                box-shadow: 0 12px 30px rgba(44, 34, 30, 0.08);
+            }
+        }
+
+        @media (max-width: 767px) and (prefers-reduced-motion: reduce) {
+            .provide-card {
+                animation: none;
+                will-change: auto;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -700,7 +771,7 @@
     <!-- NAVBAR TRANSPARENT -->
     <nav class="navbar">
         <div class="logo">
-            <a href="index.php">
+            <a href="welcome.php">
                 <img src="logo.png" onerror="this.onerror=null; this.src='images/logo.png';" alt="Jadi Batek Logo" class="logo-img">
             </a>
         </div>
@@ -712,7 +783,7 @@
         </button>
 
         <ul class="nav-links" id="site-nav-links">
-            <li><a href="index.php">HOME</a></li>
+            <li><a href="welcome.php">HOME</a></li>
             <li><a href="about.php">ABOUT</a></li>
             <li><a href="gallery.php" class="active">GALLERY</a></li>
             <li><a href="video.php">VIDEO</a></li>
@@ -720,7 +791,11 @@
             <li><a href="contact.php">CONTACT</a></li>
         </ul>
 
-        <button class="search-btn-only" type="button" onclick="openSearchModal()">
+        <button class="search-btn-only" type="button" onclick="openSearchModal()" aria-label="Open search">
+            <svg class="mobile-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                <circle cx="11" cy="11" r="7"></circle>
+                <path d="m20 20-4-4"></path>
+            </svg>
             <i class="fas fa-search"></i>
         </button>
 
@@ -872,6 +947,25 @@
     <?php include 'footer.php'; ?>
 
     <script>
+        document.querySelectorAll('.provide-card').forEach(card => {
+            card.setAttribute('role', 'button');
+            card.setAttribute('tabindex', '0');
+            card.setAttribute('aria-pressed', 'false');
+
+            const toggleActive = () => {
+                const isActive = card.classList.toggle('is-active');
+                card.setAttribute('aria-pressed', String(isActive));
+            };
+
+            card.addEventListener('click', toggleActive);
+            card.addEventListener('keydown', event => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    toggleActive();
+                }
+            });
+        });
+
         const menuToggle = document.querySelector('.menu-toggle');
         const navLinks = document.getElementById('site-nav-links');
 

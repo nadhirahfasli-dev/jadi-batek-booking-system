@@ -600,7 +600,7 @@
             }
         }
 
-        @media (max-width: 1024px), (max-height: 500px) and (orientation: landscape) {
+        @media (max-width: 768px) {
             .navbar {
                 position: absolute;
                 top: 0;
@@ -695,7 +695,42 @@
                 padding-top: 120px;
             }
         }
+
+        @media (max-width: 768px) {
+            .vm-card {
+                opacity: 1;
+                transform: translateZ(0);
+                will-change: transform, opacity;
+            }
+
+            .vm-card.is-visible {
+                animation: vm-card-enter 0.55s ease-out;
+            }
+        }
+
+        @keyframes vm-card-enter {
+            from {
+                opacity: 0;
+                transform: translate3d(0, 18px, 0);
+            }
+
+            to {
+                opacity: 1;
+                transform: translate3d(0, 0, 0);
+            }
+        }
+
+        @media (max-width: 768px) and (prefers-reduced-motion: reduce) {
+            .vm-card,
+            .vm-card.is-visible {
+                opacity: 1 !important;
+                transform: none !important;
+                animation: none !important;
+                will-change: auto;
+            }
+        }
     </style>
+    <link rel="stylesheet" href="responsive.css">
 </head>
 
 <body>
@@ -703,7 +738,7 @@
     <!-- NAVBAR TRANSPARENT -->
     <nav class="navbar">
         <div class="logo">
-            <a href="index.php">
+            <a href="welcome.php">
                 <img src="logo.png" onerror="this.onerror=null; this.src='images/logo.png';" alt="Jadi Batek Logo" class="logo-img">
             </a>
         </div>
@@ -715,14 +750,18 @@
         </button>
 
         <ul class="nav-links" id="site-nav-links">
-            <li><a href="index.php">HOME</a></li>
+            <li><a href="welcome.php">HOME</a></li>
             <li><a href="about.php" class="active">ABOUT</a></li>
             <li><a href="gallery.php">GALLERY</a></li>
             <li><a href="video.php">VIDEO</a></li>
             <li><a href="booking.php">BOOKING</a></li>
-            <li><a href="#contact">CONTACT</a></li>
+            <li><a href="contact.php">CONTACT</a></li>
         </ul>
-        <button class="search-btn-only" type="button" onclick="openSearchModal()">
+        <button class="search-btn-only" type="button" onclick="openSearchModal()" aria-label="Open search">
+            <svg class="mobile-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                <circle cx="11" cy="11" r="7"></circle>
+                <path d="m20 20-4-4"></path>
+            </svg>
             <i class="fas fa-search"></i>
         </button>
     </nav>
@@ -865,6 +904,22 @@
     <script>
         const menuToggle = document.querySelector('.menu-toggle');
         const navLinks = document.getElementById('site-nav-links');
+        const visionMissionCards = document.querySelectorAll('.vm-card');
+
+        if (window.matchMedia('(max-width: 768px)').matches && 'IntersectionObserver' in window) {
+            const cardObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.15
+            });
+
+            visionMissionCards.forEach(card => cardObserver.observe(card));
+        }
 
         menuToggle.addEventListener('click', () => {
             const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';

@@ -667,6 +667,7 @@ $result = mysqli_query($conn, "SELECT * FROM bookings ORDER BY created_at DESC")
             }
         }
     </style>
+    <link rel="stylesheet" href="responsive.css">
 </head>
 
 <body>

@@ -960,10 +960,6 @@
                 padding: 0 25px;
             }
 
-            .navbar {
-                padding: 0 20px;
-            }
-
             .bottom-announcement-bar {
                 flex-direction: column;
                 text-align: center;
@@ -1135,7 +1131,7 @@
             }
         }
 
-        @media (max-width: 1024px), (max-height: 500px) and (orientation: landscape) {
+        @media (max-width: 768px) {
             .navbar {
                 position: absolute;
                 top: 0;
@@ -1232,6 +1228,7 @@
             }
         }
     </style>
+    <link rel="stylesheet" href="responsive.css">
 </head>
 
 <body>
@@ -1239,7 +1236,7 @@
     <!-- NAVBAR TRANSPARENT -->
     <nav class="navbar">
         <div class="logo">
-            <a href="index.php">
+            <a href="welcome.php">
                 <img src="logo.png" onerror="this.onerror=null; this.src='images/logo.png';" alt="Jadi Batek Logo" class="logo-img">
             </a>
         </div>
@@ -1251,7 +1248,7 @@
         </button>
 
         <ul class="nav-links" id="site-nav-links">
-            <li><a href="index.php">HOME</a></li>
+            <li><a href="welcome.php">HOME</a></li>
             <li><a href="about.php">ABOUT</a></li>
             <li><a href="gallery.php">GALLERY</a></li>
             <li><a href="video.php">VIDEO</a></li>
@@ -1259,7 +1256,11 @@
             <li><a href="contact.php" class="active">CONTACT</a></li>
         </ul>
 
-        <button class="search-btn-only" type="button" onclick="openSearchModal()">
+        <button class="search-btn-only" type="button" onclick="openSearchModal()" aria-label="Open search">
+            <svg class="mobile-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                <circle cx="11" cy="11" r="7"></circle>
+                <path d="m20 20-4-4"></path>
+            </svg>
             <i class="fas fa-search"></i>
         </button>
 

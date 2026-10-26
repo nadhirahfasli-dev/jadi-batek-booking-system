@@ -235,6 +235,7 @@ if (isset($_POST['login'])) {
             }
         }
     </style>
+    <link rel="stylesheet" href="responsive.css">
 </head>
 
 <body>
@@ -265,7 +266,7 @@ if (isset($_POST['login'])) {
         </form>
 
         <div class="back-link">
-            <a href="index.php"><i class="fas fa-arrow-left"></i> Back to Main Website</a>
+            <a href="welcome.php"><i class="fas fa-arrow-left"></i> Back to Main Website</a>
         </div>
     </div>
 

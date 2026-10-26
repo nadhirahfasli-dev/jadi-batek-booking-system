@@ -283,10 +283,6 @@
                 height: 320px;
             }
 
-            .navbar {
-                padding: 0 20px;
-            }
-
             .main-showcase-section {
                 padding-left: 20px;
                 padding-right: 20px;
@@ -457,7 +453,8 @@
             }
         }
 
-        @media (max-width: 1024px), (max-height: 500px) and (orientation: landscape) {
+        @media (max-width: 768px),
+        (max-height: 500px) and (orientation: landscape) {
             .navbar {
                 position: absolute;
                 top: 0;
@@ -553,6 +550,7 @@
             }
         }
     </style>
+    <link rel="stylesheet" href="responsive.css">
 </head>
 
 <body>
@@ -560,7 +558,7 @@
     <!-- NAVBAR TRANSPARENT -->
     <nav class="navbar">
         <div class="logo">
-            <a href="index.php">
+            <a href="welcome.php">
                 <img src="logo.png" onerror="this.onerror=null; this.src='images/logo.png';" alt="Jadi Batek Logo" class="logo-img">
             </a>
         </div>
@@ -572,7 +570,7 @@
         </button>
 
         <ul class="nav-links" id="site-nav-links">
-            <li><a href="index.php">HOME</a></li>
+            <li><a href="welcome.php">HOME</a></li>
             <li><a href="about.php">ABOUT</a></li>
             <li><a href="gallery.php">GALLERY</a></li>
             <li><a href="video.php" class="active">VIDEO</a></li>
@@ -580,7 +578,11 @@
             <li><a href="contact.php">CONTACT</a></li>
         </ul>
 
-        <button class="search-btn-only" type="button" onclick="openSearchModal()">
+        <button class="search-btn-only" type="button" onclick="openSearchModal()" aria-label="Open search">
+            <svg class="mobile-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                <circle cx="11" cy="11" r="7"></circle>
+                <path d="m20 20-4-4"></path>
+            </svg>
             <i class="fas fa-search"></i>
         </button>
 
@@ -603,10 +605,14 @@
             <div class="cinema-card">
                 <div class="media-frame">
                     <span class="badge-tag"><i class="fas fa-user-tie"></i> Leadership Insight</span>
-                    <video controls poster="image1.jpg">
-                        <source src="video1new.mp4" type="video/mp4">
-                        Your browser does not support HTML5 video.
-                    </video>
+                    <!-- YouTube Embed Iframe -->
+                    <iframe
+                        src="https://www.youtube.com/embed/1PTW3_wcHKw"
+                        title="Interview with Our CEO"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen>
+                    </iframe>
                 </div>
                 <div class="card-details">
                     <div>

@@ -943,7 +943,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
 
-        @media (max-width: 1024px), (max-height: 500px) and (orientation: landscape) {
+        @media (max-width: 768px) {
             .navbar {
                 position: absolute;
                 top: 0;
@@ -1042,6 +1042,128 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
     </style>
+    <link rel="stylesheet" href="responsive.css">
+    <style>
+        @media (min-width: 769px) {
+            .total-box-bottom {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+            }
+
+            .total-price {
+                margin-left: auto;
+                font-family: inherit;
+                font-size: 1.5rem;
+                font-weight: 700;
+                text-align: right;
+                text-transform: uppercase;
+                white-space: nowrap;
+            }
+
+            .navbar {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                z-index: 1000;
+                background: linear-gradient(to bottom, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.6) 60%, transparent 100%) !important;
+            }
+
+            .navbar .logo {
+                position: static;
+                flex: 0 0 150px;
+                transform: none;
+            }
+
+            .navbar .nav-links {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                display: flex;
+                flex: 0 1 auto;
+                justify-content: center;
+                align-items: center;
+                gap: clamp(10px, 1.8vw, 28px);
+                width: max-content;
+                max-width: calc(100% - 250px);
+                max-height: none;
+                overflow: visible;
+                margin: 0;
+                padding: 0;
+                background: transparent;
+                box-shadow: none;
+                transform: translate(-50%, -50%);
+            }
+
+            .navbar .nav-links li {
+                width: auto;
+            }
+
+            .navbar .nav-links a {
+                position: relative;
+                display: inline-block;
+                padding: 10px 0;
+                color: #333333;
+                font-size: clamp(11px, 1.05vw, 13px);
+                font-weight: 700;
+                letter-spacing: clamp(0.5px, 0.12vw, 1.5px);
+                text-decoration: none;
+                text-transform: uppercase;
+                white-space: nowrap;
+            }
+
+            .navbar .nav-links a::after {
+                position: absolute;
+                right: 0;
+                bottom: 2px;
+                left: 0;
+                width: 100%;
+                height: 2px;
+                background: #e84c55;
+                content: '';
+                transform: scaleX(0);
+                transform-origin: left;
+                transition: transform 0.25s ease;
+            }
+
+            .navbar .nav-links a:hover,
+            .navbar .nav-links a.active {
+                color: #e84c55;
+            }
+
+            .navbar .nav-links a:hover::after,
+            .navbar .nav-links a.active::after {
+                transform: scaleX(1);
+            }
+
+            .navbar .search-btn-only {
+                display: flex;
+                flex: 0 0 42px;
+                align-items: center;
+                justify-content: flex-end;
+                width: 42px;
+                height: 42px;
+                margin: 0;
+                padding: 8px;
+                color: #333333;
+                background: none;
+                border: none;
+                cursor: pointer;
+            }
+
+            .navbar .search-btn-only .mobile-search-icon {
+                display: block;
+                width: 21px;
+                height: 21px;
+            }
+
+            .navbar .search-btn-only>i {
+                display: none;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -1049,7 +1171,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- NAVBAR TRANSPARENT -->
     <nav class="navbar">
         <div class="logo">
-            <a href="index.php">
+            <a href="welcome.php">
                 <img src="logo.png" onerror="this.onerror=null; this.src='images/logo.png';" alt="Jadi Batek Logo" class="logo-img">
             </a>
         </div>
@@ -1061,7 +1183,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </button>
 
         <ul class="nav-links" id="site-nav-links">
-            <li><a href="index.php">HOME</a></li>
+            <li><a href="welcome.php">HOME</a></li>
             <li><a href="about.php">ABOUT</a></li>
             <li><a href="gallery.php">GALLERY</a></li>
             <li><a href="video.php">VIDEO</a></li>
@@ -1069,7 +1191,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <li><a href="contact.php">CONTACT</a></li>
         </ul>
 
-        <button class="search-btn-only" type="button" onclick="openSearchModal()">
+        <button class="search-btn-only" type="button" onclick="openSearchModal()" aria-label="Open search">
+            <svg class="mobile-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                <circle cx="11" cy="11" r="7"></circle>
+                <path d="m20 20-4-4"></path>
+            </svg>
             <i class="fas fa-search"></i>
         </button>
     </nav>
@@ -1604,13 +1730,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 })
                 .catch(error => {
                     console.error('Error submitting booking:', error);
-                    alert('Terdapat masalah teknikal. Sila cuba lagi.');
+                    alert('There is a technical issue. Please try again.');
                 });
         }
 
         function closeSuccessModal() {
             document.getElementById('successModal').style.display = 'none';
-            window.location.href = 'index.php';
+            window.location.href = 'welcome.php';
         }
 
         // Inisialisasi awal
