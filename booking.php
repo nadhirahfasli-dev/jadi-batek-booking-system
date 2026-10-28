@@ -285,14 +285,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         /* GRID AKTIVITI */
         .package-grid-2col {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(4, minmax(0, 1fr));
             gap: 24px;
         }
 
         .activity-card {
-            background: rgba(255, 255, 255, 0.92);
-            border-radius: 22px;
-            padding: 28px;
+            background: #fff;
+            border-radius: 12px;
+            padding: 0;
             border: 2px solid rgba(197, 154, 69, 0.22);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
             cursor: pointer;
@@ -305,6 +305,118 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             animation: cardAppear 0.6s forwards;
         }
 
+        .activity-radio {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+        }
+
+        .activity-card:focus-within {
+            outline: 2px solid #e53935;
+            outline-offset: 3px;
+        }
+
+        .activity-img {
+            display: block;
+            flex: 0 0 auto;
+            width: 100%;
+            aspect-ratio: 3 / 4;
+            object-fit: cover;
+            object-position: center;
+            border-radius: 12px 12px 0 0;
+        }
+
+        .activity-img-wrapper {
+            position: relative;
+            flex: 0 0 auto;
+            width: 100%;
+            aspect-ratio: 3 / 4;
+            overflow: hidden;
+            border-radius: 12px 12px 0 0;
+        }
+
+        .activity-img-wrapper .activity-img {
+            position: absolute;
+            inset: 0;
+            height: 100%;
+            border-radius: inherit;
+            opacity: 1;
+            transition: opacity 0.5s ease;
+        }
+
+        .activity-img-wrapper .activity-img--second {
+            opacity: 0;
+        }
+
+        .activity-img-wrapper[data-active-slide="2"] .activity-img--first {
+            opacity: 0;
+        }
+
+        .activity-img-wrapper[data-active-slide="2"] .activity-img--second {
+            opacity: 1;
+        }
+
+        @media (hover: hover) and (min-width: 768px) {
+            .activity-img-wrapper:hover .activity-img--first {
+                opacity: 0;
+            }
+
+            .activity-img-wrapper:hover .activity-img--second {
+                opacity: 1;
+            }
+        }
+
+        .activity-image-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            z-index: 1;
+            padding: 6px 10px;
+            border-radius: 20px;
+            background: #e53935;
+            color: #fff;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .slider-dots {
+            position: absolute;
+            right: 0;
+            bottom: 12px;
+            left: 0;
+            z-index: 1;
+            display: flex;
+            justify-content: center;
+            gap: 7px;
+        }
+
+        .slider-dot {
+            width: 8px;
+            height: 8px;
+            padding: 0;
+            border: 1px solid #fff;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+        }
+
+        .slider-dot.active {
+            background: #fff;
+            transform: scale(1.2);
+        }
+
+        .activity-card-content {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 16px;
+            text-align: left;
+        }
+
         .activity-card:hover {
             border-color: var(--primary-gold);
             transform: translateY(-5px);
@@ -312,9 +424,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         .activity-card.selected {
-            border-color: var(--primary-red);
+            border-color: #e53935;
             background: rgba(255, 253, 252, 0.98);
             box-shadow: 0 18px 40px var(--red-glow);
+        }
+
+        .activity-card.selected:hover {
+            border-color: #e53935;
         }
 
         .activity-card.selected::after {
@@ -322,8 +438,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             font-family: 'Font Awesome 6 Free';
             font-weight: 900;
             position: absolute;
-            top: 18px;
-            right: 18px;
+            top: 12px;
+            right: 12px;
+            z-index: 5;
             background: var(--primary-red);
             color: #fff;
             width: 28px;
@@ -337,25 +454,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             animation: popIn 0.3s ease;
         }
 
-        .activity-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 14px;
-        }
-
-        .activity-icon {
-            width: 50px;
-            height: 50px;
-            background: rgba(197, 154, 69, 0.15);
-            color: var(--primary-gold);
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-        }
-
         .badge-tag {
             font-size: 10px;
             padding: 4px 12px;
@@ -367,46 +465,127 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         .activity-title {
-            font-size: 19px;
-            font-weight: 700;
-            color: var(--dark-accent);
-            margin-bottom: 6px;
-        }
-
-        .activity-meta {
-            font-size: 14px;
-            color: #555;
-            display: flex;
-            gap: 18px;
-            margin-bottom: 18px;
-        }
-
-        .activity-meta span {
-            display: flex;
-            align-items: center;
-            gap: 6px;
+            margin-bottom: 12px;
+            color: #333;
+            font-size: 15px;
+            font-weight: 600;
+            line-height: 1.45;
         }
 
         .activity-bottom {
             display: flex;
-            justify-content: space-between;
             align-items: flex-end;
-            border-top: 1px dashed rgba(197, 154, 69, 0.3);
-            padding-top: 16px;
-        }
-
-        .price-label {
-            font-size: 11px;
-            color: #777;
-            text-transform: uppercase;
-            font-weight: 600;
+            width: 100%;
+            margin-top: auto;
         }
 
         .price-val {
-            font-size: 28px;
+            color: #333;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 17px;
             font-weight: 700;
-            color: var(--primary-red);
-            font-family: 'Cormorant Garamond', serif;
+        }
+
+        .voucher-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 24px;
+        }
+
+        .activity-card.voucher-card {
+            border: 1.5px solid #d4af37;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+        }
+
+        .activity-card.voucher-card:hover,
+        .activity-card.voucher-card.selected {
+            border-color: #d4af37;
+            box-shadow: 0 12px 32px rgba(212, 175, 55, 0.3);
+        }
+
+        .voucher-image-wrap {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .voucher-card .activity-img {
+            transition: transform 0.45s ease;
+        }
+
+        .voucher-card:hover .activity-img {
+            transform: scale(1.05);
+        }
+
+        .voucher-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            z-index: 1;
+            padding: 7px 10px;
+            border-radius: 20px;
+            background: #d4af37;
+            color: #fff;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.6px;
+        }
+
+        .voucher-specs {
+            margin: -4px 0 14px;
+            color: #666;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        .voucher-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            width: 100%;
+            margin-bottom: 16px;
+        }
+
+        .voucher-option {
+            flex: 1 1 auto;
+            min-height: 36px;
+            padding: 8px 10px;
+            border: 1px solid #e5d9b6;
+            border-radius: 8px;
+            background: #fff;
+            color: #5e4b17;
+            cursor: pointer;
+            font: inherit;
+            font-size: 11px;
+            font-weight: 600;
+            transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .voucher-option:hover {
+            transform: translateY(-2px);
+            border-color: #d4af37;
+        }
+
+        .voucher-option.active {
+            border-color: #d4af37;
+            background: #d4af37;
+            color: #fff;
+        }
+
+        .voucher-price {
+            transition: transform 0.2s ease;
+        }
+
+        @media (min-width: 768px) and (max-width: 1023px) {
+            .voucher-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 767px) {
+            .voucher-grid {
+                grid-template-columns: minmax(0, 1fr);
+            }
         }
 
         /* FORM STYLES */
@@ -773,7 +952,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         @media (max-width: 992px) {
 
             .process-flow-container,
-            .package-grid-2col,
             .payment-options-grid,
             .summary-details-grid,
             .form-grid {
@@ -1271,188 +1449,143 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
 
             <div class="package-grid-2col">
-                <!-- ITEM 1 -->
-                <div class="activity-card selected" data-cat="popular painting" onclick="selectPackage(this, 'Batik Coloring (Cotton)', 38)">
-                    <div>
-                        <div class="activity-top">
-                            <div class="activity-icon"><i class="fas fa-paint-brush"></i></div>
-                            <span class="badge-tag">Popular</span>
-                        </div>
-                        <h4 class="activity-title">Batik Coloring</h4>
-                        <div class="activity-meta">
-                            <span><i class="fas fa-layer-group"></i> Cotton</span>
-                            <span><i class="far fa-clock"></i> 1 Hour</span>
+                <label class="activity-card selected spooky-card" data-cat="popular painting">
+                    <input class="activity-radio" type="radio" name="activity_selection" value="Spooky Class at Jadi Batek (20 x 20 cm) + FREE TREAT" data-price="38" form="bookingForm" checked onchange="selectPackage(this.closest('.activity-card'), this.value, Number(this.dataset.price))">
+                    <div class="activity-img-wrapper" data-active-slide="1">
+                        <img src="spooky1.png" class="activity-img activity-img--first" alt="Spooky Batik Class design, image 1">
+                        <img src="spooky2.png" class="activity-img activity-img--second" alt="Spooky Batik Class design, image 2">
+                        <span class="activity-image-badge">FREE TREAT</span>
+                        <div class="slider-dots" aria-label="Spooky class images">
+                            <button class="slider-dot active" type="button" aria-label="Show Spooky Class image 1" aria-pressed="true" onclick="setSpookySlide(this, 1, event)"></button>
+                            <button class="slider-dot" type="button" aria-label="Show Spooky Class image 2" aria-pressed="false" onclick="setSpookySlide(this, 2, event)"></button>
                         </div>
                     </div>
-                    <div class="activity-bottom">
-                        <span class="price-label">Price / Pax</span>
-                        <span class="price-val">RM 38</span>
-                    </div>
-                </div>
+                    <span class="activity-card-content">
+                        <span class="activity-title">Spooky Class at Jadi Batek (20 x 20 cm) + FREE TREAT</span>
+                        <span class="activity-bottom"><span class="price-val">RM 38.00</span></span>
+                    </span>
+                </label>
 
-                <!-- ITEM 2 -->
-                <div class="activity-card" data-cat="popular painting" onclick="selectPackage(this, 'Batik Painting & Coloring (Cotton)', 68)">
-                    <div>
-                        <div class="activity-top">
-                            <div class="activity-icon"><i class="fas fa-palette"></i></div>
-                            <span class="badge-tag">Best Value</span>
-                        </div>
-                        <h4 class="activity-title">Batik Painting & Coloring</h4>
-                        <div class="activity-meta">
-                            <span><i class="fas fa-layer-group"></i> Cotton</span>
-                            <span><i class="far fa-clock"></i> 2 Hours</span>
-                        </div>
-                    </div>
-                    <div class="activity-bottom">
-                        <span class="price-label">Price / Pax</span>
-                        <span class="price-val">RM 68</span>
-                    </div>
-                </div>
+                <label class="activity-card" data-cat="painting">
+                    <input class="activity-radio" type="radio" name="activity_selection" value="Mini Batik Class at Jadi Batek (14cm diam.)" data-price="22" form="bookingForm" onchange="selectPackage(this.closest('.activity-card'), this.value, Number(this.dataset.price))">
+                    <img src="b2.png" class="activity-img" alt="Mini Batik Class at Jadi Batek (14cm diam.)">
+                    <span class="activity-card-content">
+                        <span class="activity-title">Mini Batik Class at Jadi Batek (14cm diam.)</span>
+                        <span class="activity-bottom"><span class="price-val">RM 22.00</span></span>
+                    </span>
+                </label>
 
-                <!-- ITEM 3 -->
-                <div class="activity-card" data-cat="painting" onclick="selectPackage(this, 'Batik Painting & Coloring (Silk)', 88)">
-                    <div>
-                        <div class="activity-top">
-                            <div class="activity-icon"><i class="fas fa-gem"></i></div>
-                        </div>
-                        <h4 class="activity-title">Batik Painting & Coloring</h4>
-                        <div class="activity-meta">
-                            <span><i class="fas fa-layer-group"></i> Premium Silk</span>
-                            <span><i class="far fa-clock"></i> 2 Hours</span>
-                        </div>
-                    </div>
-                    <div class="activity-bottom">
-                        <span class="price-label">Price / Pax</span>
-                        <span class="price-val">RM 88</span>
-                    </div>
-                </div>
+                <label class="activity-card" data-cat="painting">
+                    <input class="activity-radio" type="radio" name="activity_selection" value="Small Batik Class at Jadi Batek (20 x 20cm)" data-price="38" form="bookingForm" onchange="selectPackage(this.closest('.activity-card'), this.value, Number(this.dataset.price))">
+                    <img src="b3.png" class="activity-img" alt="Small Batik Class at Jadi Batek (20 x 20cm)">
+                    <span class="activity-card-content">
+                        <span class="activity-title">Small Batik Class at Jadi Batek (20 x 20cm)</span>
+                        <span class="activity-bottom"><span class="price-val">RM 38.00</span></span>
+                    </span>
+                </label>
 
-                <!-- ITEM 4 -->
-                <div class="activity-card" data-cat="wearables" onclick="selectPackage(this, 'Batik Tote Bag', 68)">
-                    <div>
-                        <div class="activity-top">
-                            <div class="activity-icon"><i class="fas fa-shopping-bag"></i></div>
-                        </div>
-                        <h4 class="activity-title">Batik Tote Bag</h4>
-                        <div class="activity-meta">
-                            <span><i class="fas fa-layer-group"></i> Cotton Bag</span>
-                            <span><i class="far fa-clock"></i> 2 Hours</span>
-                        </div>
-                    </div>
-                    <div class="activity-bottom">
-                        <span class="price-label">Price / Pax</span>
-                        <span class="price-val">RM 68</span>
-                    </div>
-                </div>
+                <label class="activity-card" data-cat="wearables">
+                    <input class="activity-radio" type="radio" name="activity_selection" value="Batik Tote Bag DIY at Jadi Batek" data-price="68" form="bookingForm" onchange="selectPackage(this.closest('.activity-card'), this.value, Number(this.dataset.price))">
+                    <img src="b4.png" class="activity-img" alt="Batik Tote Bag DIY at Jadi Batek">
+                    <span class="activity-card-content">
+                        <span class="activity-title">Batik Tote Bag DIY at Jadi Batek</span>
+                        <span class="activity-bottom"><span class="price-val">RM 68.00</span></span>
+                    </span>
+                </label>
 
-                <!-- ITEM 5 -->
-                <div class="activity-card" data-cat="wearables" onclick="selectPackage(this, 'Batik Scarf Painting (Cotton)', 200)">
-                    <div>
-                        <div class="activity-top">
-                            <div class="activity-icon"><i class="fas fa-scroll"></i></div>
-                        </div>
-                        <h4 class="activity-title">Batik Scarf Painting</h4>
-                        <div class="activity-meta">
-                            <span><i class="fas fa-layer-group"></i> Cotton Scarf</span>
-                            <span><i class="far fa-clock"></i> 90-120 Mins</span>
-                        </div>
-                    </div>
-                    <div class="activity-bottom">
-                        <span class="price-label">Price / Pax</span>
-                        <span class="price-val">RM 200</span>
-                    </div>
-                </div>
+                <label class="activity-card" data-cat="painting">
+                    <input class="activity-radio" type="radio" name="activity_selection" value="Standard Batik Drawing Class at Jadi Batek (30 x 40cm)" data-price="78" form="bookingForm" onchange="selectPackage(this.closest('.activity-card'), this.value, Number(this.dataset.price))">
+                    <img src="b5.png" class="activity-img" alt="Standard Batik Drawing Class at Jadi Batek (30 x 40cm)">
+                    <span class="activity-card-content">
+                        <span class="activity-title">Standard Batik Drawing Class at Jadi Batek (30 x 40cm)</span>
+                        <span class="activity-bottom"><span class="price-val">RM 78.00</span></span>
+                    </span>
+                </label>
 
-                <!-- ITEM 6 -->
-                <div class="activity-card" data-cat="wearables" onclick="selectPackage(this, 'Batik Scarf Painting (Silk)', 250)">
-                    <div>
-                        <div class="activity-top">
-                            <div class="activity-icon"><i class="fas fa-crown"></i></div>
-                        </div>
-                        <h4 class="activity-title">Batik Scarf Painting</h4>
-                        <div class="activity-meta">
-                            <span><i class="fas fa-layer-group"></i> Pure Silk Scarf</span>
-                            <span><i class="far fa-clock"></i> 90-120 Mins</span>
-                        </div>
-                    </div>
-                    <div class="activity-bottom">
-                        <span class="price-label">Price / Pax</span>
-                        <span class="price-val">RM 250</span>
-                    </div>
-                </div>
+                <label class="activity-card" data-cat="wearables">
+                    <input class="activity-radio" type="radio" name="activity_selection" value="Batik T-shirt DIY at Jadi Batek (Kids / Adult)" data-price="68" form="bookingForm" onchange="selectPackage(this.closest('.activity-card'), this.value, Number(this.dataset.price))">
+                    <img src="b6.png" class="activity-img" alt="Batik T-shirt DIY at Jadi Batek (Kids / Adult)">
+                    <span class="activity-card-content">
+                        <span class="activity-title">Batik T-shirt DIY at Jadi Batek (Kids / Adult)</span>
+                        <span class="activity-bottom"><span class="price-val">RM 68.00</span></span>
+                    </span>
+                </label>
 
-                <!-- ITEM 7 -->
-                <div class="activity-card" data-cat="wearables" onclick="selectPackage(this, 'Batik Pareo Painting (Cotton)', 300)">
-                    <div>
-                        <div class="activity-top">
-                            <div class="activity-icon"><i class="fas fa-vest"></i></div>
-                        </div>
-                        <h4 class="activity-title">Batik Pareo Painting</h4>
-                        <div class="activity-meta">
-                            <span><i class="fas fa-layer-group"></i> Cotton Pareo</span>
-                            <span><i class="far fa-clock"></i> 120-150 Mins</span>
-                        </div>
-                    </div>
-                    <div class="activity-bottom">
-                        <span class="price-label">Price / Pax</span>
-                        <span class="price-val">RM 300</span>
-                    </div>
-                </div>
+                <label class="activity-card" data-cat="wearables">
+                    <input class="activity-radio" type="radio" name="activity_selection" value="Batik Class Scarf Drawing at Jadi Batek" data-price="250" form="bookingForm" onchange="selectPackage(this.closest('.activity-card'), this.value, Number(this.dataset.price))">
+                    <img src="b7.png" class="activity-img" alt="Batik Class Scarf Drawing at Jadi Batek">
+                    <span class="activity-card-content">
+                        <span class="activity-title">Batik Class Scarf Drawing at Jadi Batek</span>
+                        <span class="activity-bottom"><span class="price-val">RM 250.00</span></span>
+                    </span>
+                </label>
 
-                <!-- ITEM 8 -->
-                <div class="activity-card" data-cat="wearables" onclick="selectPackage(this, 'Batik Pareo Painting (Silk)', 400)">
-                    <div>
-                        <div class="activity-top">
-                            <div class="activity-icon"><i class="fas fa-star"></i></div>
-                        </div>
-                        <h4 class="activity-title">Batik Pareo Painting</h4>
-                        <div class="activity-meta">
-                            <span><i class="fas fa-layer-group"></i> Silk Pareo</span>
-                            <span><i class="far fa-clock"></i> 120-150 Mins</span>
-                        </div>
-                    </div>
-                    <div class="activity-bottom">
-                        <span class="price-label">Price / Pax</span>
-                        <span class="price-val">RM 400</span>
-                    </div>
-                </div>
+                <label class="activity-card" data-cat="wearables">
+                    <input class="activity-radio" type="radio" name="activity_selection" value="Batik Class Pareo Drawing at Jadi Batek" data-price="350" form="bookingForm" onchange="selectPackage(this.closest('.activity-card'), this.value, Number(this.dataset.price))">
+                    <img src="b8.png" class="activity-img" alt="Batik Class Pareo Drawing at Jadi Batek">
+                    <span class="activity-card-content">
+                        <span class="activity-title">Batik Class Pareo Drawing at Jadi Batek</span>
+                        <span class="activity-bottom"><span class="price-val">RM 350.00</span></span>
+                    </span>
+                </label>
 
-                <!-- ITEM 9 -->
-                <div class="activity-card" data-cat="popular wearables" onclick="selectPackage(this, 'Batik T-Shirts (Adult)', 80)">
-                    <div>
-                        <div class="activity-top">
-                            <div class="activity-icon"><i class="fas fa-shirt"></i></div>
-                        </div>
-                        <h4 class="activity-title">Batik T-Shirt (Adult)</h4>
-                        <div class="activity-meta">
-                            <span><i class="fas fa-layer-group"></i> Cotton T-Shirt</span>
-                            <span><i class="far fa-clock"></i> 60-90 Mins</span>
-                        </div>
-                    </div>
-                    <div class="activity-bottom">
-                        <span class="price-label">Price / Pax</span>
-                        <span class="price-val">RM 80</span>
-                    </div>
-                </div>
-
-                <!-- ITEM 10 -->
-                <div class="activity-card" data-cat="wearables" onclick="selectPackage(this, 'Batik T-Shirts (Child)', 60)">
-                    <div>
-                        <div class="activity-top">
-                            <div class="activity-icon"><i class="fas fa-child"></i></div>
-                        </div>
-                        <h4 class="activity-title">Batik T-Shirt (Child)</h4>
-                        <div class="activity-meta">
-                            <span><i class="fas fa-layer-group"></i> Cotton T-Shirt</span>
-                            <span><i class="far fa-clock"></i> 60-90 Mins</span>
-                        </div>
-                    </div>
-                    <div class="activity-bottom">
-                        <span class="price-label">Price / Pax</span>
-                        <span class="price-val">RM 60</span>
-                    </div>
-                </div>
             </div>
+
+            <section class="voucher-section" aria-labelledby="voucher-heading">
+                <h3 class="section-title-sm" id="voucher-heading">Gift Vouchers</h3>
+                <div class="voucher-grid">
+                    <article class="activity-card voucher-card" data-cat="painting" onclick="selectVoucherCard(this)">
+                        <input class="activity-radio" type="radio" name="activity_selection" value="(Gift Voucher) Small Batik Class at Jadi Batek - Colouring Only" data-price="38" form="bookingForm" aria-label="Select Small Batik Class gift voucher" onchange="selectPackage(this.closest('.activity-card'), this.value, Number(this.dataset.price))">
+                        <div class="voucher-image-wrap">
+                            <img src="b10.jpg" class="activity-img" alt="Small Batik Class gift voucher">
+                            <span class="voucher-badge">DIGITAL VOUCHER</span>
+                        </div>
+                        <div class="activity-card-content">
+                            <h4 class="activity-title">(Gift Voucher) Small Batik Class at Jadi Batek</h4>
+                            <p class="voucher-specs">Size: 20cm × 20cm | Material: Cotton</p>
+                            <div class="voucher-options" aria-label="Small class voucher options">
+                                <button class="voucher-option active" type="button" aria-pressed="true" data-option="Colouring Only" data-price="38" onclick="selectVoucherOption(this, event)">Colouring Only · RM 38.00</button>
+                                <button class="voucher-option" type="button" aria-pressed="false" data-option="Drawing &amp; Colouring" data-price="48" onclick="selectVoucherOption(this, event)">Drawing &amp; Colouring · RM 48.00</button>
+                            </div>
+                            <div class="activity-bottom"><span class="price-val voucher-price">RM 38.00</span></div>
+                        </div>
+                    </article>
+
+                    <article class="activity-card voucher-card" data-cat="wearables" onclick="selectVoucherCard(this)">
+                        <input class="activity-radio" type="radio" name="activity_selection" value="(Gift Voucher) Batik tote bag DIY at Jadi Batek - Colouring Only" data-price="68" form="bookingForm" aria-label="Select Batik tote bag DIY gift voucher" onchange="selectPackage(this.closest('.activity-card'), this.value, Number(this.dataset.price))">
+                        <div class="voucher-image-wrap">
+                            <img src="b11.jpg" class="activity-img" alt="Batik tote bag DIY gift voucher">
+                            <span class="voucher-badge">DIGITAL VOUCHER</span>
+                        </div>
+                        <div class="activity-card-content">
+                            <h4 class="activity-title">(Gift Voucher) Batik tote bag DIY at Jadi Batek</h4>
+                            <p class="voucher-specs">Material: Cotton Canvas</p>
+                            <div class="voucher-options" aria-label="Tote bag voucher options">
+                                <button class="voucher-option active" type="button" aria-pressed="true" data-option="Colouring Only" data-price="68" onclick="selectVoucherOption(this, event)">Colouring Only · RM 68.00</button>
+                                <button class="voucher-option" type="button" aria-pressed="false" data-option="Drawing &amp; Colouring" data-price="78" onclick="selectVoucherOption(this, event)">Drawing &amp; Colouring · RM 78.00</button>
+                            </div>
+                            <div class="activity-bottom"><span class="price-val voucher-price">RM 68.00</span></div>
+                        </div>
+                    </article>
+
+                    <article class="activity-card voucher-card" data-cat="painting" onclick="selectVoucherCard(this)">
+                        <input class="activity-radio" type="radio" name="activity_selection" value="(Gift Voucher) Standard Batik Drawing Class at Jadi Batek - Cotton" data-price="78" form="bookingForm" aria-label="Select Standard Batik Drawing Class gift voucher" onchange="selectPackage(this.closest('.activity-card'), this.value, Number(this.dataset.price))">
+                        <div class="voucher-image-wrap">
+                            <img src="b9.jpg" class="activity-img" alt="Standard Batik Drawing Class gift voucher">
+                            <span class="voucher-badge">DIGITAL VOUCHER</span>
+                        </div>
+                        <div class="activity-card-content">
+                            <h4 class="activity-title">(Gift Voucher) Standard Batik Drawing Class at Jadi Batek</h4>
+                            <p class="voucher-specs">Size: 30cm × 40cm</p>
+                            <div class="voucher-options" aria-label="Standard class voucher options">
+                                <button class="voucher-option active" type="button" aria-pressed="true" data-option="Cotton" data-price="78" onclick="selectVoucherOption(this, event)">Cotton · RM 78.00</button>
+                                <button class="voucher-option" type="button" aria-pressed="false" data-option="Habutai Silk" data-price="98" onclick="selectVoucherOption(this, event)">Habutai Silk · RM 98.00</button>
+                            </div>
+                            <div class="activity-bottom"><span class="price-val voucher-price">RM 78.00</span></div>
+                        </div>
+                    </article>
+                </div>
+            </section>
         </div>
 
         <!-- STEP 2: SCHEDULE & CONTACT DETAILS -->
@@ -1461,19 +1594,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="form-box">
                 <form id="bookingForm" onsubmit="handleBookingSubmit(event)">
                     <!-- INPUT HIDDEN UNTUK DATA JS -->
-                    <input type="hidden" name="package_name" id="hiddenPackage" value="Batik Coloring (Cotton)">
+                    <input type="hidden" name="package_name" id="hiddenPackage" value="Spooky Class at Jadi Batek (20 x 20 cm) + FREE TREAT">
                     <input type="hidden" name="pax" id="hiddenPax" value="1">
                     <input type="hidden" name="total_price" id="hiddenTotal" value="38">
 
                     <div class="form-grid">
                         <div class="form-group full">
                             <label>Full Name</label>
-                            <input type="text" name="custName" id="custName" class="form-control" placeholder="e.g. Sarah Jenkins" required>
+                            <input type="text" name="custName" id="custName" class="form-control" placeholder="e.g. Nadhirah Fasli" required>
                         </div>
 
                         <div class="form-group">
                             <label>Email Address</label>
-                            <input type="email" name="custEmail" id="custEmail" class="form-control" placeholder="sarah@example.com" required>
+                            <input type="email" name="custEmail" id="custEmail" class="form-control" placeholder="nadhirah@example.com" required>
                         </div>
 
                         <div class="form-group">
@@ -1633,7 +1766,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             });
         });
 
-        let selectedPkgName = "Batik Coloring (Cotton)";
+        let selectedPkgName = "Spooky Class at Jadi Batek (20 x 20 cm) + FREE TREAT";
         let selectedPkgPrice = 38;
         let paxCount = 1;
 
@@ -1664,11 +1797,55 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 card.classList.remove('selected');
             });
             element.classList.add('selected');
+            const radio = element.querySelector('input[type="radio"]');
+            if (radio) radio.checked = true;
 
             selectedPkgName = pkgName;
             selectedPkgPrice = price;
 
             updateSummary();
+        }
+
+        function setSpookySlide(dot, slide, event) {
+            event.stopPropagation();
+            const wrapper = dot.closest('.activity-img-wrapper');
+            wrapper.dataset.activeSlide = String(slide);
+
+            wrapper.querySelectorAll('.slider-dot').forEach((button, index) => {
+                const isActive = index + 1 === slide;
+                button.classList.toggle('active', isActive);
+                button.setAttribute('aria-pressed', String(isActive));
+            });
+        }
+
+        function selectVoucherCard(card) {
+            const activeOption = card.querySelector('.voucher-option.active');
+            selectVoucherOption(activeOption);
+        }
+
+        function selectVoucherOption(button, event) {
+            if (event) event.stopPropagation();
+            const card = button.closest('.voucher-card');
+            const radio = card.querySelector('input[type="radio"]');
+            const optionButtons = card.querySelectorAll('.voucher-option');
+            const price = Number(button.dataset.price);
+            const title = card.querySelector('.activity-title').textContent;
+            const packageName = `${title} - ${button.dataset.option}`;
+
+            optionButtons.forEach(option => {
+                const isActive = option === button;
+                option.classList.toggle('active', isActive);
+                option.setAttribute('aria-pressed', String(isActive));
+            });
+
+            radio.value = packageName;
+            radio.dataset.price = String(price);
+            card.querySelector('.voucher-price').textContent = `RM ${price.toFixed(2)}`;
+            card.querySelector('.voucher-price').style.transform = 'scale(1.06)';
+            window.setTimeout(() => {
+                card.querySelector('.voucher-price').style.transform = '';
+            }, 180);
+            selectPackage(card, packageName, price);
         }
 
         function selectPayment(element) {

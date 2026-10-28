@@ -11,6 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,500;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <style>
         :root {
@@ -1329,32 +1330,32 @@
         <!-- CONTACT FORM (RIGHT) -->
         <div class="contact-form-box">
             <h3 class="form-title">Send Us A Message <i class="fas fa-paper-plane" style="font-size: 18px; color: var(--primary-gold);"></i></h3>
-            <form id="contactForm" onsubmit="handleContactSubmit(event)">
+            <form id="contactForm" onsubmit="handleContactSubmit(event)" novalidate>
                 <div class="form-grid-contact">
 
                     <div class="form-group-c full">
                         <label>Your Full Name</label>
-                        <input type="text" class="form-control-c" placeholder="e.g. Sarah Jenkins" required>
+                        <input type="text" name="name" class="form-control-c" placeholder="e.g. Nadhirah Fasli" required>
                     </div>
 
                     <div class="form-group-c">
                         <label>Email Address</label>
-                        <input type="email" class="form-control-c" placeholder="sarah@example.com" required>
+                        <input type="email" name="email" class="form-control-c" placeholder="nadhirah@example.com" required>
                     </div>
 
                     <div class="form-group-c">
                         <label>Phone Number</label>
-                        <input type="tel" class="form-control-c" placeholder="+60 12-345 6789" required>
+                        <input type="tel" name="phone" class="form-control-c" placeholder="+60 12-345 6789" required>
                     </div>
 
                     <div class="form-group-c full">
                         <label>Subject</label>
-                        <input type="text" class="form-control-c" placeholder="General Inquiry / Workshop / Corporate Group" required>
+                        <input type="text" name="subject" class="form-control-c" placeholder="General Inquiry / Workshop / Corporate Group" required>
                     </div>
 
                     <div class="form-group-c full">
                         <label>Message / Details</label>
-                        <textarea class="form-control-c" placeholder="How can we assist your visit or booking today?" required></textarea>
+                        <textarea name="message" class="form-control-c" placeholder="How can we assist your visit or booking today?" required></textarea>
                     </div>
 
                 </div>
@@ -1452,6 +1453,48 @@
     <script>
         const menuToggle = document.querySelector('.menu-toggle');
         const navLinks = document.getElementById('site-nav-links');
+        const contactForm = document.getElementById('contactForm');
+
+        function handleContactSubmit(event) {
+            event.preventDefault();
+
+            const requiredFields = ['name', 'email', 'phone', 'subject', 'message'];
+            const hasEmptyRequiredField = requiredFields.some(field =>
+                contactForm.elements[field].value.trim() === ''
+            );
+
+            if (hasEmptyRequiredField) {
+                Swal.fire({
+                    title: 'Required fields missing',
+                    text: 'Please fill in all required fields',
+                    icon: 'warning',
+                    confirmButtonColor: '#e53935'
+                });
+                return;
+            }
+
+            const emailField = contactForm.elements.email;
+            if (!emailField.validity.valid) {
+                Swal.fire({
+                    title: 'Invalid email address',
+                    text: 'Please enter a valid email address.',
+                    icon: 'warning',
+                    confirmButtonColor: '#e53935'
+                });
+                return;
+            }
+
+            Swal.fire({
+                title: 'Message Sent Successfully!',
+                text: 'Thank you for contacting Jadi Batek. We will get back to you shortly via email.',
+                icon: 'success',
+                confirmButtonColor: '#e53935'
+            }).then(result => {
+                if (result.isConfirmed) {
+                    contactForm.reset();
+                }
+            });
+        }
 
         menuToggle.addEventListener('click', () => {
             const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';

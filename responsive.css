@@ -30,7 +30,7 @@
     }
 }
 
-@media (min-width: 769px) and (max-width: 1024px) {
+@media (min-width: 768px) and (max-width: 1023px) {
     .about-container {
         grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
         gap: 28px;
@@ -103,7 +103,7 @@
     }
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1023px) {
     .gallery-hero,
     .video-hero,
     .contact-hero {
@@ -156,7 +156,7 @@
 
     .activity-card {
         min-width: 0;
-        padding: 22px;
+        padding: 0;
     }
 
     .activity-meta,
@@ -584,11 +584,14 @@
     }
 
     .process-flow-container,
-    .package-grid-2col,
     .form-grid,
     .summary-details-grid,
     .payment-options-grid {
         grid-template-columns: minmax(0, 1fr);
+    }
+
+    .package-grid-2col {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .process-flow-container {
@@ -617,7 +620,7 @@
     }
 
     .activity-card {
-        padding: 20px;
+        padding: 0;
     }
 
     .activity-meta {

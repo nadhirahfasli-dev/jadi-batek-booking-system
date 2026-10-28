@@ -572,7 +572,7 @@
         <!-- VIDEO BACKGROUND -->
         <video autoplay loop muted playsinline class="bg-video">
             <source src="video1new.mp4" type="video/mp4">
-            <source src="images/video1new.mp4" type="video/mp4">
+            <source src="video1new.mp4" type="video/mp4">
         </video>
 
         <!-- NAVBAR -->

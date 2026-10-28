@@ -289,7 +289,7 @@
 
     <div class="splash-container">
         <!-- 10 Kartu Gambar Terapung Berterabur Estetik -->
-        <img src="image23.png" class="floating-image card-1" alt="Batik 1">
+        <img src="image31.jpg" class="floating-image card-1" alt="Batik 1">
         <img src="image3.jpg" class="floating-image card-2" alt="Batik 2">
         <img src="image5.jpg" class="floating-image card-3" alt="Batik 3">
         <img src="image4.jpg" class="floating-image card-4" alt="Batik 4">
